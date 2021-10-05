@@ -1,0 +1,9 @@
+.git/
+/.idea/
+/.vagrant/
+/spec/fixtures/manifests/
+/spec/fixtures/modules/
+/tmp/
+/vendor/
+.DS_Store
+.project

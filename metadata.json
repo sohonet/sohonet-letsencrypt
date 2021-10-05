@@ -1,0 +1,35 @@
+{
+  "name": "sohonet-letsencrypt",
+  "version": "0.1.0",
+  "author": "Stephen M. Boyd",
+  "summary": "An alternative module for configuring and running certbot",
+  "license": "MIT",
+  "source": "https://github.com/sohonet/sohonet-letsencrypt",
+  "dependencies": [
+
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "18.04",
+        "20.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.5.22 < 8.0.0"
+    }
+  ],
+  "pdk-version": "2.1.0",
+  "template-url": "pdk-default#2.1.0",
+  "template-ref": "tags/2.1.0-0-ga675ea5"
+}
