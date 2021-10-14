@@ -27,6 +27,10 @@
     {
       "name": "puppet",
       "version_requirement": ">= 5.5.22 < 8.0.0"
+    },
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 0.0.0"
     }
   ],
   "pdk-version": "2.1.0",
