@@ -1,6 +1,7 @@
 require 'rspec-puppet/rake_task'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
+require 'puppetlabs_spec_helper/rake_tasks'
 
 exclude_paths = [
   "**/pkg/**/*",
@@ -8,6 +9,7 @@ exclude_paths = [
   "**/spec/**/*",
 ]
 
+PuppetLint.configuration.disable_checks = ['autoloader_layout']
 PuppetLint.configuration.ignore_paths = exclude_paths
 PuppetLint.configuration.fail_on_warnings = true
 
@@ -18,4 +20,4 @@ end
 
 PuppetSyntax.exclude_paths = exclude_paths
 
-task :default => [:rspec, :lint, :syntax]
+task :default => [:spec, :lint, :syntax]

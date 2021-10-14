@@ -1,12 +1,12 @@
 # vim:ft=make:noexpandtab:
-.PHONY := setup spec syntax lint lint-fix gems help
+.PHONY := setup spec-tests syntax lint lint-fix gems help
 .DEFAULT_GOAL := help
 
-unit-tests: syntax lint ## Run all unit tests
+unit-tests: syntax lint spec-tests ## Run all unit tests
 
 setup: gems
 
-spec: ## Run puppet-rspec tests
+spec-tests: ## Run puppet-rspec tests
 	echo "Running puppet-rspec tests"
 	RUBYOPT="-W0" bundle exec rake spec
 
