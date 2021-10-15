@@ -3,7 +3,7 @@ class letsencrypt (
   $site_fqdn,
   Array $commandline_args = [],
   Boolean $disable_all_flags = false,
-  $virtualenv_path = '/var/letsencrypt',
+  $virtualenv_path = '/var/lib/sohonet-letsencrypt',
   String $certbot_version = 'v1.19.0',
 ) {
 
@@ -32,6 +32,18 @@ class letsencrypt (
     ensure  => file,
     content => template('letsencrypt/config.ini.erb'),
     path    => "${virtualenv_path}/config.ini",
+    require => File['Virtual Environment Directory'],
   }
 
+  file { 'Certbot Cronjob Script':
+    ensure  => file,
+    source  => 'puppet:///modules/letsencrypt/cronjob.sh',
+    path    => "${virtualenv_path}/cronjob.sh",
+    require => File['Virtual Environment Directory'],
+  }
+
+  cron { 'Certbot Renewal':
+    command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn}",
+    hour    => 12,
+  }
 }
