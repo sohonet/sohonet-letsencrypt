@@ -16,13 +16,16 @@ class letsencrypt (
     path   => $virtualenv_path,
   }
   ~> exec { 'Create Virtual Env':
-    command      => '/usr/bin/env pipenv --python python3',
+    command     => '/usr/bin/env pipenv --python python3',
+    refreshonly => true,
   }
   -> exec { 'Bootstrap Pip':
-    command => '/usr/bin/env pipenv run pip install --upgrade pip',
+    command     => '/usr/bin/env pipenv run pip install --upgrade pip',
+    refreshonly => true,
   }
   -> exec { 'Install Dependencies':
-    command => "/usr/bin/env pipenv run pip install certbot==${certbot_version}",
+    command     => "/usr/bin/env pipenv run pip install certbot==${certbot_version}",
+    refreshonly => true,
   }
 
   file { 'Certbot Config File':
