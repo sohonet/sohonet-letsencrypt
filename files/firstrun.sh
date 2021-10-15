@@ -11,8 +11,7 @@ cd "$virtualEnvDir" || exit 1
 /usr/bin/env pipenv run certbot \
     -c "$virtualEnvDir"/config.ini \
     --config-dir "$virtualEnvDir" \
-    --keep-until-expiring \
     --quiet \
-    renew \
+    certonly \
     --cert-name "$siteFqdn" \
     -d "$siteFqdn"

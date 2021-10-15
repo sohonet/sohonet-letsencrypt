@@ -42,8 +42,21 @@ class letsencrypt (
     require => File['Virtual Environment Directory'],
   }
 
+  file { 'Certbot First Run Script':
+    ensure  => file,
+    source  => 'puppet:///modules/letsencrypt/firstrun.sh',
+    path    => "${virtualenv_path}/firstrun.sh",
+    require => File['Virtual Environment Directory'],
+  }
+
+  exec { 'Initial Certbot Run':
+    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn}",
+    creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
+  }
+
   cron { 'Certbot Renewal':
     command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn}",
     hour    => 12,
+    require => Exec['Initial Certbot Run'],
   }
 }
