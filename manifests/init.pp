@@ -40,6 +40,7 @@ class letsencrypt (
     source  => 'puppet:///modules/letsencrypt/cronjob.sh',
     path    => "${virtualenv_path}/cronjob.sh",
     require => File['Virtual Environment Directory'],
+    mode    => '0700',
   }
 
   file { 'Certbot First Run Script':
@@ -47,6 +48,7 @@ class letsencrypt (
     source  => 'puppet:///modules/letsencrypt/firstrun.sh',
     path    => "${virtualenv_path}/firstrun.sh",
     require => File['Virtual Environment Directory'],
+    mode    => '0700',
   }
 
   exec { 'Initial Certbot Run':
