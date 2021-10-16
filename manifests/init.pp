@@ -19,11 +19,11 @@ class letsencrypt (
     command     => '/usr/bin/env pipenv --python python3',
     refreshonly => true,
   }
-  -> exec { 'Bootstrap Pip':
+  ~> exec { 'Bootstrap Pip':
     command     => '/usr/bin/env pipenv run pip install --upgrade pip',
     refreshonly => true,
   }
-  -> exec { 'Install Dependencies':
+  ~> exec { 'Install Dependencies':
     command     => "/usr/bin/env pipenv run pip install certbot==${certbot_version}",
     refreshonly => true,
   }
@@ -54,6 +54,7 @@ class letsencrypt (
   exec { 'Initial Certbot Run':
     command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn}",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
+    require => File['Virtual Environment Directory'],
   }
 
   cron { 'Certbot Renewal':
