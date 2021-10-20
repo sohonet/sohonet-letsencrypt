@@ -54,7 +54,10 @@ class letsencrypt (
   exec { 'Initial Certbot Run':
     command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn}",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
-    require => File['Virtual Environment Directory'],
+    require => [
+      File['Virtual Environment Directory'],
+      Exec['Install Dependencies'],
+    ]
   }
 
   cron { 'Certbot Renewal':

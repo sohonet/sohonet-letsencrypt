@@ -10,8 +10,9 @@ cd "$virtualEnvDir" || exit 1
 
 /usr/bin/env pipenv run certbot \
     -c "$virtualEnvDir"/config.ini \
-    --config-dir "$virtualEnvDir" \
     --quiet \
     certonly \
     --cert-name "$siteFqdn" \
-    -d "$siteFqdn"
+    -d "$siteFqdn" \
+    --agree-tos \
+    --email "dnr-admin@sohonet.com"
