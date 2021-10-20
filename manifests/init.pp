@@ -8,12 +8,14 @@ class letsencrypt (
 ) {
 
   Exec {
-    cwd => $virtualenv_path,
+    cwd     => $virtualenv_path,
+    require => Package['pipenv'],
   }
 
   file { 'Virtual Environment Directory':
-    ensure => directory,
-    path   => $virtualenv_path,
+    ensure  => directory,
+    path    => $virtualenv_path,
+    require => Package['pipenv'],
   }
   ~> exec { 'Create Virtual Env':
     command     => '/usr/bin/env pipenv --python python3',

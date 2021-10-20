@@ -5,5 +5,9 @@ describe 'letsencrypt' do
         'site_fqdn' => 'example.foo.com',
     } }
 
+    let(:pre_condition) {
+        'package { "pipenv": }'
+    }
+
     it { is_expected.to compile.with_all_deps }
 end
