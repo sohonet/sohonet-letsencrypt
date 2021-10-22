@@ -23,4 +23,4 @@ cd "$virtualEnvDir" || exit 1
     --agree-tos \
     --email "$email" \
     --pre-hook "$pre_hook" \
-    --post-host "$post_hook"
+    --post-hook "$post_hook"

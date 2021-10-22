@@ -19,4 +19,4 @@ cd "$virtualEnvDir" || exit 1
     renew \
     --cert-name "$siteFqdn" \
     --pre-hook "$pre_hook" \
-    --post-host "$post_hook"
+    --post-hook "$post_hook"
