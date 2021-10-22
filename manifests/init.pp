@@ -1,8 +1,9 @@
 # @summary Manage a letsencrypt setup
 class letsencrypt (
   $site_fqdn,
-  Array $commandline_args = [],
-  Boolean $disable_all_flags = false,
+  String $email,
+  Optional[String] $pre_hook = undef,
+  Optional[String] $post_hook = undef,
   $virtualenv_path = '/var/lib/sohonet-letsencrypt',
   String $certbot_version = 'v1.19.0',
 ) {
@@ -54,7 +55,7 @@ class letsencrypt (
   }
 
   exec { 'Initial Certbot Run':
-    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn}",
+    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email}",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
     require => [
       File['Virtual Environment Directory'],
