@@ -65,7 +65,7 @@ class letsencrypt (
   }
 
   exec { 'Initial Certbot Run':
-    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} ${certbot_pre_hook} ${certbot_post_hook}",
+    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} '${certbot_pre_hook}' '${certbot_post_hook}'",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
     require => [
       File['Virtual Environment Directory'],
