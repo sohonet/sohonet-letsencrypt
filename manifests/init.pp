@@ -74,7 +74,7 @@ class letsencrypt (
   }
 
   cron { 'Certbot Renewal':
-    command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn} ${certbot_pre_hook} ${certbot_post_hook}",
+    command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn} '${certbot_pre_hook}' '${certbot_post_hook}'",
     hour    => 12,
     require => Exec['Initial Certbot Run'],
   }
