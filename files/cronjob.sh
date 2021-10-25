@@ -18,5 +18,5 @@ cd "$virtualEnvDir" || exit 1
     --quiet \
     renew \
     --cert-name "$siteFqdn" \
-    --pre-hook "\"$pre_hook\"" \
-    --post-hook "\"$post_hook\""
+    --pre-hook "$pre_hook" \
+    --post-hook "$post_hook"
