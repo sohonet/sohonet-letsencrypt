@@ -11,9 +11,10 @@ siteFqdn="$2"
 email="$3"
 pre_hook="$4"
 post_hook="$5"
+authenticator="$6"
+alt_names="$7"
 
-if [ -n "$6" ]; then
-    alt_names="$6"
+if [ -n "$alt_names" ]; then
     siteFqdn="$siteFqdn,$alt_names"
 fi
 
@@ -28,4 +29,5 @@ cd "$virtualEnvDir" || exit 1
     --agree-tos \
     --email "$email" \
     --pre-hook "$pre_hook" \
-    --post-hook "$post_hook"
+    --post-hook "$post_hook" \
+    --authenticator "$authenticator"
