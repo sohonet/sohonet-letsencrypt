@@ -17,7 +17,7 @@ authenticator="$6"
 webroot_paths="$7"
 alt_names="$8"
 
-actual_webroot_paths=$(printf '%s' ${webroot_paths##-w })
+actual_webroot_paths=$(printf '%s' "${webroot_paths##-w}")
 
 if [ -z "$actual_webroot_paths" ]; then
     webroot_paths=''
