@@ -6,6 +6,7 @@ class letsencrypt (
   Optional[String] $post_hook = undef,
   Optional[String] $alt_names = undef,
   Enum['standalone', 'webroot'] $authenticator = 'standalone',
+  Optional[String] $webroot_paths = undef,
   $virtualenv_path = '/var/lib/sohonet-letsencrypt',
   String $certbot_version = 'v1.19.0',
 ) {
@@ -23,6 +24,11 @@ class letsencrypt (
   $certbot_alt_names = $alt_names ? {
     undef => '',
     default => $alt_names,
+  }
+
+  $cerbot_webroot_paths = $webroot_paths ? {
+    undef => '',
+    default => $webroot_paths,
   }
 
   Exec {
@@ -72,7 +78,7 @@ class letsencrypt (
   }
 
   exec { 'Initial Certbot Run':
-    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} '${certbot_pre_hook}' '${certbot_post_hook}' '${authenticator}' '${alt_names}'",
+    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} '${certbot_pre_hook}' '${certbot_post_hook}' '${authenticator}' '-w ${webroot_paths}' '${alt_names}'",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
     require => [
       File['Virtual Environment Directory'],
@@ -81,7 +87,7 @@ class letsencrypt (
   }
 
   cron { 'Certbot Renewal':
-    command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn} '${certbot_pre_hook}' '${certbot_post_hook}' '${authenticator}'",
+    command => "${virtualenv_path}/cronjob.sh ${virtualenv_path} ${site_fqdn} '${certbot_pre_hook}' '${certbot_post_hook}'",
     hour    => 12,
     require => Exec['Initial Certbot Run'],
   }
