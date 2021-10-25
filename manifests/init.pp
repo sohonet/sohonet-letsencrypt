@@ -4,6 +4,7 @@ class letsencrypt (
   String $email,
   Optional[String] $pre_hook = undef,
   Optional[String] $post_hook = undef,
+  Optional[String] $alt_names = undef,
   $virtualenv_path = '/var/lib/sohonet-letsencrypt',
   String $certbot_version = 'v1.19.0',
 ) {
@@ -16,6 +17,11 @@ class letsencrypt (
   $certbot_post_hook = $post_hook ? {
     undef => '/usr/bin/true',
     default => $post_hook,
+  }
+
+  $certbot_alt_names = $alt_names ? {
+    undef => '',
+    default => $alt_names,
   }
 
   Exec {
@@ -65,7 +71,7 @@ class letsencrypt (
   }
 
   exec { 'Initial Certbot Run':
-    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} '${certbot_pre_hook}' '${certbot_post_hook}'",
+    command => "${virtualenv_path}/firstrun.sh ${virtualenv_path} ${site_fqdn} ${email} '${certbot_pre_hook}' '${certbot_post_hook}' '${alt_names}'",
     creates => "/etc/letsencrypt/renewal/${site_fqdn}.conf",
     require => [
       File['Virtual Environment Directory'],

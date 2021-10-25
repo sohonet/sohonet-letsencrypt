@@ -12,6 +12,11 @@ email="$3"
 pre_hook="$4"
 post_hook="$5"
 
+if [ -n "$6" ]; then
+    alt_names="$6"
+    siteFqdn="$siteFqdn,$alt_names"
+fi
+
 cd "$virtualEnvDir" || exit 1
 
 /usr/bin/env pipenv run certbot \
