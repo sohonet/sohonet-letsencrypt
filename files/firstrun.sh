@@ -39,5 +39,4 @@ cd "$virtualEnvDir" || exit 1
     --email "$email" \
     --pre-hook "\"$pre_hook\"" \
     --post-hook "\"$post_hook\"" \
-    --authenticator "$authenticator" \
-    "$webroot_paths"
+    --authenticator "$authenticator" "$webroot_paths"
