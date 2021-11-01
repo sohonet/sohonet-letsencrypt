@@ -33,8 +33,8 @@ if [ -z "$actual_webroot_paths" ]; then
         -d "$siteFqdn" \
         --agree-tos \
         --email "$email" \
-        --pre-hook "\"$pre_hook\"" \
-        --post-hook "\"$post_hook\"" \
+        --pre-hook "$pre_hook" \
+        --post-hook "$post_hook" \
         --authenticator "$authenticator"
 else
     /usr/bin/env pipenv run certbot \
@@ -45,8 +45,8 @@ else
         -d "$siteFqdn" \
         --agree-tos \
         --email "$email" \
-        --pre-hook "\"$pre_hook\"" \
-        --post-hook "\"$post_hook\"" \
+        --pre-hook "$pre_hook" \
+        --post-hook "$post_hook" \
         --authenticator "$authenticator" \
         "$webroot_paths"
 fi
