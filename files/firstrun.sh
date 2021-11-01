@@ -37,7 +37,7 @@ cd "$virtualEnvDir" || exit 1
     -d "$siteFqdn" \
     --agree-tos \
     --email "$email" \
-    --pre-hook "$pre_hook" \
-    --post-hook "$post_hook" \
+    --pre-hook "\"$pre_hook\"" \
+    --post-hook "\"$post_hook\"" \
     --authenticator "$authenticator" \
     "$webroot_paths"
