@@ -36,14 +36,14 @@ class letsencrypt (
 
   file { 'Certbot Config File':
     ensure  => file,
-    content => template('letsencrypt/config.ini.erb'),
+    content => template('letsencrypt/config.ini.epp'),
     path    => "${virtualenv_path}/config.ini",
     require => File['Virtual Environment Directory'],
   }
 
   file { 'Certbot Cronjob Script':
     ensure  => file,
-    source  => 'puppet:///modules/letsencrypt/cronjob.sh',
+    content => template('letsencrypt/cronjob.sh.epp'),
     path    => "${virtualenv_path}/cronjob.sh",
     require => File['Virtual Environment Directory'],
     mode    => '0700',
@@ -51,7 +51,7 @@ class letsencrypt (
 
   file { 'Certbot First Run Script':
     ensure  => file,
-    source  => 'puppet:///modules/letsencrypt/firstrun.sh',
+    content => template('letsencrypt/firstrun.sh.epp'),
     path    => "${virtualenv_path}/firstrun.sh",
     require => File['Virtual Environment Directory'],
     mode    => '0700',
