@@ -11,6 +11,8 @@ class letsencrypt (
   String $certbot_version = 'v1.19.0',
 ) {
 
+  require ::letsencrypt::install
+
   $certbot_pre_hook = $pre_hook ? {
     undef => '/usr/bin/env true',
     default => $pre_hook,
@@ -29,29 +31,6 @@ class letsencrypt (
   $cerbot_webroot_paths = $webroot_paths ? {
     undef => '',
     default => $webroot_paths,
-  }
-
-  Exec {
-    cwd     => $virtualenv_path,
-    require => Package['pipenv'],
-  }
-
-  file { 'Virtual Environment Directory':
-    ensure  => directory,
-    path    => $virtualenv_path,
-    require => Package['pipenv'],
-  }
-  ~> exec { 'Create Virtual Env':
-    command     => '/usr/bin/env pipenv --python python3',
-    refreshonly => true,
-  }
-  ~> exec { 'Bootstrap Pip':
-    command     => '/usr/bin/env pipenv run pip install --upgrade pip',
-    refreshonly => true,
-  }
-  ~> exec { 'Install Dependencies':
-    command     => "/usr/bin/env pipenv run pip install certbot==${certbot_version}",
-    refreshonly => true,
   }
 
   file { 'Certbot Config File':
