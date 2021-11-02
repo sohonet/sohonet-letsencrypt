@@ -7,6 +7,7 @@ class letsencrypt (
   Optional[String] $alt_names = undef,
   Enum['standalone', 'webroot'] $authenticator = 'standalone',
   Optional[String] $webroot_paths = undef,
+  Optional[String] $plugin = undef,
   $virtualenv_path = '/var/lib/sohonet-letsencrypt',
   String $certbot_version = 'v1.19.0',
 ) {
