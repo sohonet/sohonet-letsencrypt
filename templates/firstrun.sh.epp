@@ -1,52 +1,30 @@
+<%- | String $virtualenv_path,
+      String $site_fqdn,
+      String $email,
+      String $pre_hook = '/usr/bin/env true',
+      String $post_hook = '/usr/bin/env true',
+      Optional[String] $alt_names = undef,
+      Enum['standalone', 'webroot'] $authenticator = 'standalone',
+      Optional[String] $webroot_paths = undef,
+| -%>
 #!/bin/sh
+# Managed by Puppet.
+<%- if $alt_names {$_alt_names = join([$site_fqdn, $alt_names], ',')} else { $_alt_names = $site_fqdn } -%>
 
-[ -n "$1" ] && [ -d "$1" ] || exit 1
-[ -n "$2" ] || exit 1
-[ -n "$3" ] || exit 1
-[ -n "$4" ] || exit 1
-[ -n "$5" ] || exit 1
-[ -n "$6" ] || exit 1
-[ -n "$7" ] || exit 1
+cd "<%= $virtualenv_path %>" || exit 1
 
-virtualEnvDir="$1"
-siteFqdn="$2"
-email="$3"
-pre_hook="$4"
-post_hook="$5"
-authenticator="$6"
-webroot_paths="$7"
-alt_names="$8"
-actual_webroot_paths=$(printf '%s' "${webroot_paths##-w}")
-
-if [ -n "$alt_names" ]; then
-    siteFqdn="$siteFqdn,$alt_names"
-fi
-
-cd "$virtualEnvDir" || exit 1
-
-if [ -z "$actual_webroot_paths" ]; then
-    /usr/bin/env pipenv run certbot \
-        -c "$virtualEnvDir"/config.ini \
-        --quiet \
-        certonly \
-        --cert-name "$siteFqdn" \
-        -d "$siteFqdn" \
-        --agree-tos \
-        --email "$email" \
-        --pre-hook "$pre_hook" \
-        --post-hook "$post_hook" \
-        --authenticator "$authenticator"
-else
-    /usr/bin/env pipenv run certbot \
-        -c "$virtualEnvDir"/config.ini \
-        --quiet \
-        certonly \
-        --cert-name "$siteFqdn" \
-        -d "$siteFqdn" \
-        --agree-tos \
-        --email "$email" \
-        --pre-hook "$pre_hook" \
-        --post-hook "$post_hook" \
-        --authenticator "$authenticator" \
-        "$webroot_paths"
-fi
+/usr/bin/env pipenv run certbot \
+    -c "<%= $virtualenv_path %>/config.ini" \
+    --quiet \
+    certonly \
+    --cert-name "<%= $site_fqdn %>" \
+    -d "<%= $_alt_names %>" \
+    --agree-tos \
+    --email "<%= $email %>" \
+    --pre-hook "<%= $pre_hook %>" \
+    --post-hook "<%= $post_hook %>" \
+    <%- if $webroot_paths { -%>
+    --authenticator "<%= $authenticator %>" \
+    -w "<%= $webroot_paths %>"
+    <%- } else { -%>
+    --authenticator "<%= $authenticator %>"<% } -%>

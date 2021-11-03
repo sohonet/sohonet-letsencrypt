@@ -2,21 +2,26 @@
 .PHONY := setup spec-tests syntax lint lint-fix gems help
 .DEFAULT_GOAL := help
 
-unit-tests: syntax lint spec-tests ## Run all unit tests
+unit-tests: syntax lint spec-tests template-check ## Run all unit tests
 
 setup: gems
 
 spec-tests: ## Run puppet-rspec tests
-	echo "Running puppet-rspec tests"
+	@echo "Running puppet-rspec tests"
 	RUBYOPT="-W0" bundle exec rake spec
 
 syntax: ## Run puppet-syntax tests
-	echo "Running puppet-syntax tests"
+	@echo "Running puppet-syntax tests"
 	RUBYOPT="-W0" bundle exec rake syntax
 
 lint: ## Run puppet-lint tests
-	echo "Running puppet-lint tests"
+	@echo "Running puppet-lint tests"
 	RUBYOPT="-W0" bundle exec rake lint
+
+template-check:
+	@echo "Checking template rendering"
+	tests/check-template.sh firstrun.sh.epp
+	tests/check-template.sh cronjob.sh.epp
 
 lint-fix: ## Autofix linting errors
 	RUBYOPT="-W0" bundle exec rake lint_autocorrect

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'letsencrypt::certificate' do
-    let(:title) {
-        'sample'
-    }
+    $site_fqdn = 'example.foo.com'
+
+    let(:title) { $site_fqdn }
 
     let(:node_params) {
         {
@@ -14,7 +14,7 @@ describe 'letsencrypt::certificate' do
 
     let(:params) {
         {
-            'site_fqdn' => 'example.foo.com',
+            'site_fqdn' => $site_fqdn,
             'email' => 'test@example.com',
         }
     }
@@ -36,7 +36,7 @@ describe 'letsencrypt::certificate' do
 
         let(:params) {
             {
-                'site_fqdn' => 'example.foo.com',
+                'site_fqdn' => $site_fqdn,
                 'email' => 'test@example.com',
                 'pre_hook' => '/usr/bin/foo',
                 'post_hook' => '/usr/bin/bar',
