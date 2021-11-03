@@ -9,7 +9,7 @@ class letsencrypt (
 
   file { 'Certbot Config File':
     ensure  => file,
-    content => template('letsencrypt/config.ini.epp'),
+    content => epp('letsencrypt/config.ini.epp'),
     path    => "${virtualenv_path}/config.ini",
   }
 

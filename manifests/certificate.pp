@@ -31,14 +31,14 @@ define letsencrypt::certificate (
 
   file { "${site_fqdn} Cronjob Script":
     ensure  => file,
-    content => template('letsencrypt/cronjob.sh.epp'),
+    content => epp('letsencrypt/cronjob.sh.epp'),
     path    => "${letsencrypt::virtualenv_path}/cronjob-${site_fqdn}.sh",
     mode    => '0700',
   }
 
   file { "${site_fqdn} First Run Script":
     ensure  => file,
-    content => template('letsencrypt/firstrun.sh.epp'),
+    content => epp('letsencrypt/firstrun.sh.epp'),
     path    => "${letsencrypt::virtualenv_path}/firstrun-${site_fqdn}.sh",
     mode    => '0700',
   }
