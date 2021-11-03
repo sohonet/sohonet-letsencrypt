@@ -48,7 +48,7 @@ define letsencrypt::certificate (
   }
 
   cron { "${site_fqdn} Renewal":
-    command => "${letsencrypt::virtualenv_path}/cronjob-${site_fqdn}.sh ${letsencrypt::virtualenv_path} ${site_fqdn}'",
+    command => "${letsencrypt::virtualenv_path}/cronjob-${site_fqdn}.sh",
     hour    => 12,
     minute  => 0,
     require => Exec["${site_fqdn} Initial Certbot Run"],
