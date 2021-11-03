@@ -25,12 +25,4 @@ class letsencrypt::install (
     refreshonly => true,
   }
 
-  if $::letsencrypt::plugin {
-    exec { 'Install Plugin':
-      command     => "/usr/bin/env pipenv run pip install ${::letsencrypt::plugin}",
-      refreshonly => true,
-      subscribe   => Exec['Install Dependencies'],
-    }
-  }
-
 }
