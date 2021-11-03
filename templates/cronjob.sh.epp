@@ -1,22 +1,18 @@
+<%- | String $virtualenv_path,
+      String $site_fqdn,
+      String $pre_hook = '/usr/bin/env true',
+      String $post_hook = '/usr/bin/env true',
+| -%>
 #!/bin/sh
+# Managed by Puppet.
 
-[ -n "$1" ] && [ -d "$1" ] || exit 1
-[ -n "$2" ] || exit 1
-[ -n "$3" ] || exit 1
-[ -n "$4" ] || exit 1
-
-virtualEnvDir="$1"
-siteFqdn="$2"
-pre_hook="$3"
-post_hook="$4"
-
-cd "$virtualEnvDir" || exit 1
+cd "<%= $virtualenv_path %>" || exit 1
 
 /usr/bin/env pipenv run certbot \
-    -c "$virtualEnvDir"/config.ini \
+    -c "<%= $virtualenv_path %>/config.ini" \
     --keep-until-expiring \
     --quiet \
     renew \
-    --cert-name "$siteFqdn" \
-    --pre-hook "$pre_hook" \
-    --post-hook "$post_hook"
+    --cert-name "<%= $site_fqdn %>" \
+    --pre-hook "<%= $pre_hook %>" \
+    --post-hook "<%= $post_hook %>"
