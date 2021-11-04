@@ -30,6 +30,7 @@ class letsencrypt::install (
       command     => "/usr/bin/env pipenv run pip install certbot-${plugin}",
       refreshonly => true,
       subscribe   => Exec['Bootstrap Pip'],
+      require     => Exec['Bootstrap Pip'],
     }
   }
 
