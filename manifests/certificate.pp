@@ -5,7 +5,7 @@ define letsencrypt::certificate (
   String $pre_hook = '/usr/bin/env true',
   String $post_hook = '/usr/bin/env true',
   Optional[String] $alt_names = undef,
-  Enum['standalone', 'webroot'] $authenticator = 'standalone',
+  Enum['standalone', 'webroot', 'dns-route53'] $authenticator = 'standalone',
   Optional[String] $webroot_paths = undef,
 ) {
 

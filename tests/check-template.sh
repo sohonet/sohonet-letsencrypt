@@ -23,3 +23,4 @@ render_check()
 }
 
 echo "Checking that $template_name.sh.epp renders with minimum parameters"; render_check minimum
+echo "Checking that $template_name.sh.epp renders with added hooks"; render_check hooks
