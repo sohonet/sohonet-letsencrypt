@@ -20,9 +20,17 @@ class letsencrypt::install (
     command     => '/usr/bin/env pipenv run pip install --upgrade pip',
     refreshonly => true,
   }
-  ~> exec { 'Install Dependencies':
+  ~> exec { 'Install Certbot':
     command     => "/usr/bin/env pipenv run pip install certbot==${::letsencrypt::certbot_version}",
     refreshonly => true,
+  }
+
+  $::letsencrypt::plugins.each |$plugin| {
+    exec { "Install ${plugin}":
+      command     => "/usr/bin/env pipenv run pip install certbot-${plugin}",
+      refreshonly => true,
+      subscribe   => Exec['Bootstrap Pip'],
+    }
   }
 
 }
