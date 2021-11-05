@@ -2,13 +2,15 @@
       String $site_fqdn,
       String $pre_hook = '/usr/bin/env true',
       String $post_hook = '/usr/bin/env true',
+      Array[String] $environment = [],
 | -%>
 #!/bin/sh
 # Managed by Puppet.
+<%- if $environment.empty() {$_environment = '' } else { $_environment = sprintf('%s ', join($environment, ' ')) } -%>
 
 cd "<%= $virtualenv_path %>" || exit 1
 
-/usr/bin/env pipenv run certbot \
+<%= $_environment %>/usr/bin/env pipenv run certbot \
     -c "<%= $virtualenv_path %>/config.ini" \
     --keep-until-expiring \
     --quiet \

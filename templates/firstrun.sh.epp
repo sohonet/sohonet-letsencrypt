@@ -6,14 +6,16 @@
       Optional[String] $alt_names = undef,
       Enum['standalone', 'webroot', 'dns-route53'] $authenticator = 'standalone',
       Optional[String] $webroot_paths = undef,
+      Array[String] $environment = [],
 | -%>
 #!/bin/sh
 # Managed by Puppet.
-<%- if $alt_names {$_alt_names = join([$site_fqdn, $alt_names], ',')} else { $_alt_names = $site_fqdn } -%>
+<%- if $alt_names { $_alt_names = join([$site_fqdn, $alt_names], ',') } else { $_alt_names = $site_fqdn } -%>
+<%- if $environment.empty() {$_environment = '' } else { $_environment = sprintf('%s ', join($environment, ' ')) } -%>
 
 cd "<%= $virtualenv_path %>" || exit 1
 
-/usr/bin/env pipenv run certbot \
+<%= $_environment %>/usr/bin/env pipenv run certbot \
     -c "<%= $virtualenv_path %>/config.ini" \
     --quiet \
     certonly \

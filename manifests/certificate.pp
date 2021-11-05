@@ -7,6 +7,7 @@ define letsencrypt::certificate (
   Optional[String] $alt_names = undef,
   Enum['standalone', 'webroot', 'dns-route53'] $authenticator = 'standalone',
   Optional[String] $webroot_paths = undef,
+  Array[String] $environment = [],
 ) {
 
   $cerbot_webroot_paths = $webroot_paths ? {
@@ -21,6 +22,7 @@ define letsencrypt::certificate (
       'site_fqdn'       => $site_fqdn,
       'pre_hook'        => $pre_hook,
       'post_hook'       => $post_hook,
+      'environment'     => $environment,
     }),
     path    => "${letsencrypt::virtualenv_path}/cronjob-${site_fqdn}.sh",
     mode    => '0700',
@@ -37,6 +39,7 @@ define letsencrypt::certificate (
       'alt_names'       => $alt_names,
       'authenticator'   => $authenticator,
       'webroot_paths'   => $webroot_paths,
+      'environment'     => $environment,
     }),
     path    => "${letsencrypt::virtualenv_path}/firstrun-${site_fqdn}.sh",
     mode    => '0700',
