@@ -3,14 +3,14 @@
 
 cd "/var/foo" || exit 1
 
-FOO=foobar BAZ=bizbazz /usr/bin/env pipenv run certbot \
-    -c "/var/foo/config.ini" \
+/usr/bin/env pipenv run certbot \
+    -c "/var/foo/config-foo.com.ini" \
     --quiet \
     certonly \
     --cert-name "foo.com" \
     -d "foo.com" \
     --agree-tos \
     --email "email@example.com" \
-    --pre-hook "/usr/bin/env true" \
-    --post-hook "/usr/bin/env true" \
+    --pre-hook "/usr/bin/foo" \
+    --post-hook "/usr/bin/bar" \
     --authenticator "standalone"

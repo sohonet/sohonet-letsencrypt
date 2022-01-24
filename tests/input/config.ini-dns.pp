@@ -1,0 +1,3 @@
+{
+  authenticator => 'dns-route53',
+}

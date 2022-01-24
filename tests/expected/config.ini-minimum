@@ -1,0 +1,4 @@
+key-type = ecdsa
+elliptic-curve = secp384r1
+authenticator = standalone
+preferred-chain = "ISRG Root X1"

@@ -4,7 +4,7 @@
 cd "/var/foo" || exit 1
 
 /usr/bin/env pipenv run certbot \
-    -c "/var/foo/config.ini" \
+    -c "/var/foo/config-foo.com.ini" \
     --keep-until-expiring \
     --quiet \
     renew \

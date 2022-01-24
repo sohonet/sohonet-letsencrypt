@@ -22,6 +22,7 @@ template-check:
 	@echo "Checking template rendering"
 	tests/check-template.sh firstrun.sh.epp
 	tests/check-template.sh cronjob.sh.epp
+	tests/check-template.sh config.ini.epp minimum dns
 
 lint-fix: ## Autofix linting errors
 	RUBYOPT="-W0" bundle exec rake lint_autocorrect
