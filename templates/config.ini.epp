@@ -1,4 +1,6 @@
+<%- | Enum['standalone', 'webroot', 'dns-route53'] $authenticator = 'standalone',
+| -%>
 key-type = ecdsa
 elliptic-curve = secp384r1
-authenticator = standalone
+authenticator = <%= $authenticator %>
 preferred-chain = "ISRG Root X1"

@@ -11,7 +11,7 @@
 cd "<%= $virtualenv_path %>" || exit 1
 
 <%= $_environment %>/usr/bin/env pipenv run certbot \
-    -c "<%= $virtualenv_path %>/config.ini" \
+    -c "<%= $virtualenv_path %>/config-<%= $site_fqdn %>.ini" \
     --keep-until-expiring \
     --quiet \
     renew \

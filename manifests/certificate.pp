@@ -15,6 +15,14 @@ define letsencrypt::certificate (
     default => $webroot_paths,
   }
 
+  file { "${site_fqdn} Config File":
+    ensure  => file,
+    content => epp('letsencrypt/config.ini.epp', {
+      'authenticator' => $authenticator,
+    }),
+    path    => "${letsencrypt::virtualenv_path}/config-${site_fqdn}.ini",
+  }
+
   file { "${site_fqdn} Cronjob Script":
     ensure  => file,
     content => epp('letsencrypt/cronjob.sh.epp', {

@@ -3,8 +3,8 @@
 
 cd "/var/foo" || exit 1
 
-/usr/bin/env pipenv run certbot \
-    -c "/var/foo/config.ini" \
+FOO=foobar BAZ=bizbazz /usr/bin/env pipenv run certbot \
+    -c "/var/foo/config-foo.com.ini" \
     --quiet \
     certonly \
     --cert-name "foo.com" \

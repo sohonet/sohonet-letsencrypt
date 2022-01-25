@@ -8,12 +8,6 @@ class letsencrypt (
 
   require ::letsencrypt::install
 
-  file { 'Certbot Config File':
-    ensure  => file,
-    content => epp('letsencrypt/config.ini.epp'),
-    path    => "${virtualenv_path}/config.ini",
-  }
-
   $configs.each |Hash $config| {
     $cert_name = $config[site_fqdn]
     letsencrypt::certificate { $cert_name:
