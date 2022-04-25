@@ -3,6 +3,7 @@
       String $pre_hook = '/usr/bin/env true',
       String $post_hook = '/usr/bin/env true',
       Array[String] $environment = [],
+      Optional[String] $webroot_paths = undef,
 | -%>
 #!/bin/sh
 # Managed by Puppet.
@@ -17,4 +18,6 @@ cd "<%= $virtualenv_path %>" || exit 1
     renew \
     --cert-name "<%= $site_fqdn %>" \
     --pre-hook "<%= $pre_hook %>" \
-    --post-hook "<%= $post_hook %>"
+    --post-hook "<%= $post_hook %>" <%- if $webroot_paths { %> \
+    -w "<%= $webroot_paths %>"
+    <%- } -%>

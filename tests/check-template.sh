@@ -6,8 +6,8 @@ die()
 }
 
 if [ -z "$1" ]; then
-    echo "usage: $0 <template-file-name>"
-    echo "example: $0 firstrun.sh.epp"
+    echo "usage: $0 <template-file-name> [check-name]"
+    echo "example: $0 firstrun.sh.epp minimum"
     exit 1
 fi >&2
 
@@ -36,6 +36,7 @@ if [ -z "$*" ]; then
     echo "Checking that $template_name.epp renders with minimum parameters"; render_check minimum
     echo "Checking that $template_name.epp renders with added hooks"; render_check hooks
     echo "Checking that $template_name.epp renders with added environment"; render_check env
+    echo "Checking that $template_name.epp renders with added environment"; render_check webroot
 else
     for check_name in "$@"; do
         echo "Checking that $template_name.epp renders for $check_name"; render_check "$check_name"

@@ -31,6 +31,7 @@ define letsencrypt::certificate (
       'pre_hook'        => $pre_hook,
       'post_hook'       => $post_hook,
       'environment'     => $environment,
+      'webroot_paths'   => $cerbot_webroot_paths,
     }),
     path    => "${letsencrypt::virtualenv_path}/cronjob-${site_fqdn}.sh",
     mode    => '0700',
