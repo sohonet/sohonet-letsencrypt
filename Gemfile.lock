@@ -57,6 +57,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-darwin-21
 
 DEPENDENCIES
   metadata-json-lint
@@ -68,4 +69,4 @@ DEPENDENCIES
   sync
 
 BUNDLED WITH
-   2.2.27
+   2.2.31

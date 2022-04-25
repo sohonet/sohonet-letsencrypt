@@ -11,7 +11,7 @@ define letsencrypt::certificate (
 ) {
 
   $cerbot_webroot_paths = $webroot_paths ? {
-    undef => '',
+    undef => undef,
     default => $webroot_paths,
   }
 
@@ -46,7 +46,7 @@ define letsencrypt::certificate (
       'post_hook'       => $post_hook,
       'alt_names'       => $alt_names,
       'authenticator'   => $authenticator,
-      'webroot_paths'   => $webroot_paths,
+      'webroot_paths'   => $cerbot_webroot_paths,
       'environment'     => $environment,
     }),
     path    => "${letsencrypt::virtualenv_path}/firstrun-${site_fqdn}.sh",
