@@ -1,6 +1,6 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-gem 'puppet', '~> 5.5.22'
+gem 'puppet', '~> 7'
 gem 'rspec-puppet'
 gem 'sync'
 gem 'metadata-json-lint'
